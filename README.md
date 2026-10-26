@@ -15,7 +15,7 @@ gravity from the Gaia parallax.
 
 | File | Rows | Contents |
 | --- | --- | --- |
-| `data/table_targets.csv` | 56 | Positions, G magnitude, XP metallicity, instrument, evolutionary class, and MIST mass |
+| `data/table_targets.csv` | 56 | Positions, G magnitude, XP metallicity, instrument, and evolutionary class |
 | `data/table_results.csv` | 62 | Adopted parameters and iron abundances, one row per spectrum |
 | `data/table_equivalent_widths.csv` | 4700 | Line-by-line equivalent widths with the atomic data |
 | `data/feh_ewcaps.csv` | 248 | Iron abundances at four equivalent-width limits, one row per spectrum and limit |
@@ -46,10 +46,8 @@ ipd_frac_multi_peak <= 2.
 [Fe/H] = +0.5 with ages from 1 to 14 Gyr. Each star is matched to the nearest isochrone
 point in the Teff-log g plane, and is a dwarf if that point lies before the end of core
 hydrogen burning, a subgiant between there and the base of the red giant branch, and a
-giant otherwise. This gives 33 dwarfs, 8 subgiants, and 15 giants. `mass_mist_Msun` is
-the mass of the matched isochrone point. Our log g values assume about 1 solar mass, so
-these masses show where that assumption matters. `code/classify_isochrones.py`
-reproduces both columns.
+giant otherwise. This gives 33 dwarfs, 8 subgiants, and 15 giants.
+`code/classify_isochrones.py` reproduces this column.
 
 ## The equivalent-width limit
 
@@ -76,7 +74,7 @@ range, so the microturbulence sits at a boundary rather than at a balanced solut
 | `code/measure_equivalent_widths.py` | Measures equivalent widths by fitting a Gaussian to the line core over a local linear continuum |
 | `code/solve_abundances.jl` | Solves the microturbulence by reduced-equivalent-width balance and returns the iron abundance |
 | `code/solve_abundances_ewcaps.jl` | Rebuilds `feh_ewcaps.csv` from the released tables |
-| `code/classify_isochrones.py` | Assigns the evolutionary classes and MIST masses |
+| `code/classify_isochrones.py` | Assigns the evolutionary classes |
 
 The abundance step uses Korg (Wheeler et al. 2023) with MARCS model atmospheres. To
 rebuild the table of equivalent-width limits from the released data alone, run

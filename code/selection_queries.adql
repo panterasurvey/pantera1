@@ -1,0 +1,36 @@
+-- PANTERA I target selection (Gaia DR3 archive, Andrae et al. 2023 XGBoost table).
+-- Moved here from Appendix A of the paper (referee revision, Oct 2026).
+
+-- Dwarf and subgiant selection
+SELECT g.source_id, g.ra, g.dec,
+       g.parallax, g.parallax_over_error,
+       g.phot_g_mean_mag, g.ruwe,
+       g.ipd_frac_multi_peak, x.mh_xgboost,
+       x.teff_xgboost, x.logg_xgboost
+FROM external.xgboost_table1 AS x
+JOIN gaiadr3.gaia_source AS g
+     ON x.source_id = g.source_id
+WHERE x.mh_xgboost > 0.4
+  AND g.phot_g_mean_mag < 13
+  AND g.parallax_over_error > 5
+  AND 1000 / g.parallax < 500
+  AND g.dec > -13
+  AND g.ruwe < 1.4
+  AND g.ipd_frac_multi_peak <= 2;
+
+-- Giant selection: same query with mh_xgboost > 0.35, logg_xgboost < 3.5, and no distance cut
+SELECT g.source_id, g.ra, g.dec,
+       g.parallax, g.parallax_over_error,
+       g.phot_g_mean_mag, g.ruwe,
+       g.ipd_frac_multi_peak, x.mh_xgboost,
+       x.teff_xgboost, x.logg_xgboost
+FROM external.xgboost_table1 AS x
+JOIN gaiadr3.gaia_source AS g
+     ON x.source_id = g.source_id
+WHERE x.mh_xgboost > 0.35
+  AND x.logg_xgboost < 3.5
+  AND g.phot_g_mean_mag < 13
+  AND g.parallax_over_error > 5
+  AND g.dec > -13
+  AND g.ruwe < 1.4
+  AND g.ipd_frac_multi_peak <= 2;

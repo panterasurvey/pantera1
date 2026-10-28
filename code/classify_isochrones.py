@@ -1,26 +1,29 @@
 """Evolutionary class of each PANTERA I star from MIST isochrones.
 
 Each star is matched to the nearest point of the MIST v1.2 isochrones at
-[Fe/H] = +0.5 (ages 1 to 14 Gyr) in the Teff-logg plane, with distances
-scaled by 100 K in Teff and 0.1 dex in logg. A star is a dwarf if that point
+[Fe/H] = +0.4, the median of the sample (ages 1 to 14 Gyr), in the Teff-logg
+plane, with distances scaled by 100 K in Teff and 0.1 dex in logg. A star is a
+dwarf if that point
 lies before the end of core hydrogen burning (EEP < 454), a subgiant between
 there and the base of the red giant branch (454 <= EEP < 478), and a giant
 otherwise. This reproduces the evol_class column of data/table_targets.csv.
 
 Usage:
-    python code/classify_isochrones.py /path/to/MIST_v1.2_vvcrit0.4_basic_isos
+    python code/classify_isochrones.py /path/to/MIST_iso_feh_p0.40.iso
 
-The basic isochrone files are available from https://waps.cfa.harvard.edu/MIST/.
+The basic MIST grid has no [Fe/H] = +0.4 file, so the isochrones come from the MIST
+web interpolator (https://mist.science/interp_isos.html) with version 1.2,
+v/vcrit = 0.4, [Fe/H] = +0.4, log10 ages from 9.0 to 10.15 in steps of 0.05. Either
+the theory or the photometry output works, since only EEP, age, log_Teff and log_g
+are read.
 """
-import glob
 import sys
 
 import numpy as np
 import pandas as pd
 
 
-def read_iso(mist_dir, tag='p0.50'):
-    path = glob.glob(f'{mist_dir}/*feh_{tag}_*basic.iso')[0]
+def read_iso(path):
     rows, hdr = [], None
     with open(path) as f:
         for line in f:

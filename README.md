@@ -43,10 +43,10 @@ ipd_frac_multi_peak <= 2.
 ## Evolutionary classes
 
 `evol_class` in `data/table_targets.csv` is set from MIST v1.2 isochrones at
-[Fe/H] = +0.5 with ages from 1 to 14 Gyr. Each star is matched to the nearest isochrone
+[Fe/H] = +0.4, the median of the sample, with ages from 1 to 14 Gyr. Each star is matched to the nearest isochrone
 point in the Teff-log g plane, and is a dwarf if that point lies before the end of core
 hydrogen burning, a subgiant between there and the base of the red giant branch, and a
-giant otherwise. This gives 33 dwarfs, 8 subgiants, and 15 giants.
+giant otherwise. This gives 33 dwarfs, 7 subgiants, and 16 giants.
 `code/classify_isochrones.py` reproduces this column.
 
 ## The equivalent-width limit
@@ -57,7 +57,7 @@ lines are also the ones that set the microturbulence, including them biases the 
 low. For the benchmark giant mu Leo, whose reference value is +0.25, truncating at 100,
 120, and 140 mA returns +0.250, +0.231, and +0.172, and with no limit the same procedure
 returns +0.079. Relative to a solution with no limit, the 120 mA limit raises the giants
-by about 0.15 dex, the subgiants by 0.07 dex, and the dwarfs by 0.03 dex.
+by about 0.14 dex, the subgiants by 0.06 dex, and the dwarfs by 0.03 dex.
 
 `data/feh_ewcaps.csv` gives the abundance, the microturbulence, and the number of
 retained lines for each spectrum at each of the four limits, so the effect of this
@@ -84,11 +84,12 @@ julia code/solve_abundances_ewcaps.jl
 ```
 
 Paths at the top of that script point at the paper directory and need editing to match
-where the tables sit. The classification needs the MIST basic isochrone files
-(https://waps.cfa.harvard.edu/MIST/):
+where the tables sit. The classification needs a MIST v1.2 isochrone file at [Fe/H] = +0.4 from the MIST
+web interpolator (https://mist.science/interp_isos.html; v/vcrit = 0.4, log10 ages
+9.0 to 10.15 in steps of 0.05):
 
 ```
-python code/classify_isochrones.py /path/to/MIST_v1.2_vvcrit0.4_basic_isos
+python code/classify_isochrones.py /path/to/MIST_iso_feh_p0.40.iso
 ```
 
 ## Reduced spectra

@@ -3,10 +3,10 @@
 Each star is matched to the nearest point of the MIST v1.2 isochrones at
 [Fe/H] = +0.4, the median of the sample (ages 1 to 14 Gyr), in the Teff-logg
 plane, with distances scaled by 100 K in Teff and 0.1 dex in logg. A star is a
-dwarf if that point
-lies before the end of core hydrogen burning (EEP < 454), a subgiant between
-there and the base of the red giant branch (454 <= EEP < 478), and a giant
-otherwise. This reproduces the evol_class column of data/table_targets.csv.
+dwarf if that point lies before the end of core hydrogen burning (EEP < 454), a
+subgiant between there and the base of the red giant branch (454 <= EEP < 478),
+and a giant otherwise. This reproduces the evol_class column of
+data/table_targets.csv.
 
 Usage:
     python code/classify_isochrones.py /path/to/MIST_iso_feh_p0.40.iso
